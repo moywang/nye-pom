@@ -14,8 +14,6 @@ export class ScratchOff extends React.PureComponent {
     this.touchStart = this.touchStart.bind(this);
     this.touchMove = this.touchMove.bind(this);
     this.touchEnd = this.touchEnd.bind(this);
-
-    this.state = { showScratchCard: true };
   }
 
   componentDidMount() {
@@ -43,6 +41,7 @@ export class ScratchOff extends React.PureComponent {
 
   componentWillUnmount() {
     const canvas = this.canvas;
+    if (!canvas) return;
     canvas.removeEventListener("mousedown", this.touchStart);
     canvas.removeEventListener("touchstart", this.touchStart);
     canvas.removeEventListener("mousemove", this.touchMove);
@@ -99,8 +98,8 @@ export class ScratchOff extends React.PureComponent {
     this.isDrawing = false;
 
     // If mostly scratched, remove the canvas
-    if (this.filledInPixels > 50) {
-      this.setState({ showScratchCard: false });
+    if (this.filledInPixels > 30) {
+      this.props.reveal();
     }
   }
 
@@ -134,7 +133,7 @@ export class ScratchOff extends React.PureComponent {
           marginRight: "auto",
         }}
       >
-        {this.state.showScratchCard && (
+        {!this.props.isRevealed && (
           <canvas
             style={{
               position: "absolute",

@@ -13,11 +13,11 @@ function App() {
     case 0:
       return <Welcome onNext={() => setStep(step + 1)} />;
     case 1:
-      return <ScratchCard />;
+      return <ScratchCard onNext={() => setStep(step + 1)} />;
     case 2:
       return <div>123</div>;
     default:
-      return <div>ajlskdajsd</div>;
+      return <div>Wrong place bro</div>;
   }
 }
 
