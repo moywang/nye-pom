@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Row, Col, Image, Layout } from "antd";
-import { Content, Header } from "antd/lib/layout/layout";
+import { Form, Input, Button, Row, Col } from "antd";
 import Title from "antd/lib/typography/Title";
 import Paragraph from "antd/lib/typography/Paragraph";
 
@@ -37,16 +36,17 @@ const Sharing = () => {
         span: 24,
       }}
       layout="vertical"
+      initialValues={sharings}
       onFinish={onFinish}
     >
       <Form.Item label={QUESTIONS.q1} name="s1">
-        <Input.TextArea />
+        <Input.TextArea size="large" rows={6} />
       </Form.Item>
       <Form.Item label={QUESTIONS.q2} name="s2">
-        <Input.TextArea />
+        <Input.TextArea size="large" rows={6} />
       </Form.Item>
       <Form.Item label={QUESTIONS.q3} name="s3">
-        <Input.TextArea />
+        <Input.TextArea size="large" rows={6} />
       </Form.Item>
       <Form.Item name="finish">
         <Button type="primary" htmlType="submit">
@@ -64,25 +64,16 @@ const Sharing = () => {
       <Paragraph>{sharings.s2}</Paragraph>
       <Title level={4}>{QUESTIONS.q3}</Title>
       <Paragraph>{sharings.s3}</Paragraph>
+      <Button onClick={() => setFinished(false)}>{"< Edit"}</Button>
     </>
   );
 
   return (
-    <Layout
-      className="layout"
-      style={{ minHeight: "100VH", width: "100VW", maxWidth: "1920px" }}
-    >
-      <Header style={{ display: "flex", justifyContent: "center" }}>
-        <h1 style={{ color: "#D9D9D9" }}>New Year's Eve Service</h1>
-      </Header>
-      <Content style={{ padding: "50px" }}>
-        <Row justify="center" gutter={[32, 32]}>
-          <Col lg={12} md={16} xs={24}>
-            {finished ? <SharingResult /> : <SharingForm />}
-          </Col>
-        </Row>
-      </Content>
-    </Layout>
+    <Row justify="center" gutter={[32, 32]}>
+      <Col lg={12} md={16} xs={24}>
+        {finished ? <SharingResult /> : <SharingForm />}
+      </Col>
+    </Row>
   );
 };
 
