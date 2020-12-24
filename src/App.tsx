@@ -6,6 +6,7 @@ import "./App.css";
 
 import Welcome from "./Welcome";
 import ScratchCard from "./ScratchCard";
+import Sharing from "./Sharings";
 
 function App() {
   const [step, setStep] = useState(0);
@@ -15,7 +16,7 @@ function App() {
     case 1:
       return <ScratchCard onNext={() => setStep(step + 1)} />;
     case 2:
-      return <div>123</div>;
+      return <Sharing />;
     default:
       return <div>Wrong place bro</div>;
   }
