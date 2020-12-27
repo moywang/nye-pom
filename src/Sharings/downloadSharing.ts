@@ -39,7 +39,7 @@ const downloadPOMPdf = async (selector: string, filename: string) => {
   });
 
   const pdfBytes = await pdfDoc.save();
-  savePdf("20_21_NYE.pdf", pdfBytes);
+  savePdf(filename, pdfBytes);
 };
 
 export default downloadPOMPdf;

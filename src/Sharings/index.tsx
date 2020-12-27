@@ -105,7 +105,7 @@ const Sharing = () => {
           <Button
             block
             type="primary"
-            onClick={() => downloadPOMPdf(".sharings", "wowo.pdf")}
+            onClick={() => downloadPOMPdf(".sharings", "20_21_NYE.pdf")}
           >
             {"Download"}
           </Button>
