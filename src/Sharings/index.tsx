@@ -1,5 +1,5 @@
-import React, { ReactChild, ReactNode, useState } from "react";
-import { Form, Input, Button, Row, Col, Space } from "antd";
+import React, { ReactNode, useState } from "react";
+import { Form, Input, Button, Row, Col } from "antd";
 import Title from "antd/lib/typography/Title";
 import Paragraph from "antd/lib/typography/Paragraph";
 import downloadSharingImage from "./downloadSharing";
@@ -98,7 +98,7 @@ const Sharing = () => {
       <Row justify="space-around" gutter={[32, 32]}>
         <Col xs={8} md={6} xl={4}>
           <Button block onClick={() => setFinished(false)}>
-            {"< Edit"}
+            {"Edit"}
           </Button>
         </Col>
         <Col xs={8} md={6} xl={4}>
@@ -107,7 +107,7 @@ const Sharing = () => {
             type="primary"
             onClick={() => downloadSharingImage(".sharings")}
           >
-            {"download"}
+            {"Download"}
           </Button>
         </Col>
       </Row>
