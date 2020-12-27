@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Form, Input, Button, Row, Col } from "antd";
+import React, { ReactChild, ReactNode, useState } from "react";
+import { Form, Input, Button, Row, Col, Space } from "antd";
 import Title from "antd/lib/typography/Title";
 import Paragraph from "antd/lib/typography/Paragraph";
+import downloadSharingImage from "./downloadSharing";
 
 interface SharingContent {
   s1: string;
@@ -14,6 +15,32 @@ const QUESTIONS = {
   q2: "What's Romans 8:28?",
   q3: "What's Romans 12:21?",
 };
+const SharingFrame = ({
+  className = "sharings",
+  children,
+}: {
+  className: string;
+  children: ReactNode;
+}) => (
+  <div
+    className={className}
+    style={{
+      border: "solid 15px #252A3B",
+      padding: "15px",
+      backgroundColor: "#EDFEF7",
+    }}
+  >
+    <div
+      style={{
+        border: "5px double #252A3B",
+        padding: "20px",
+        backgroundColor: "#EDFEF7",
+      }}
+    >
+      {children}
+    </div>
+  </div>
+);
 
 const Sharing = () => {
   const [finished, setFinished] = useState<boolean>(false);
@@ -58,13 +85,32 @@ const Sharing = () => {
 
   const SharingResult = () => (
     <>
-      <Title level={4}>{QUESTIONS.q1}</Title>
-      <Paragraph>{sharings.s1}</Paragraph>
-      <Title level={4}>{QUESTIONS.q2}</Title>
-      <Paragraph>{sharings.s2}</Paragraph>
-      <Title level={4}>{QUESTIONS.q3}</Title>
-      <Paragraph>{sharings.s3}</Paragraph>
-      <Button onClick={() => setFinished(false)}>{"< Edit"}</Button>
+      <Row justify="center" gutter={[32, 32]}>
+        <SharingFrame className="sharings">
+          <Title level={4}>{QUESTIONS.q1}</Title>
+          <Paragraph>{sharings.s1}</Paragraph>
+          <Title level={4}>{QUESTIONS.q2}</Title>
+          <Paragraph>{sharings.s2}</Paragraph>
+          <Title level={4}>{QUESTIONS.q3}</Title>
+          <Paragraph>{sharings.s3}</Paragraph>
+        </SharingFrame>
+      </Row>
+      <Row justify="space-around" gutter={[32, 32]}>
+        <Col xs={8} md={6} xl={4}>
+          <Button block onClick={() => setFinished(false)}>
+            {"< Edit"}
+          </Button>
+        </Col>
+        <Col xs={8} md={6} xl={4}>
+          <Button
+            block
+            type="primary"
+            onClick={() => downloadSharingImage(".sharings")}
+          >
+            {"download"}
+          </Button>
+        </Col>
+      </Row>
     </>
   );
 
