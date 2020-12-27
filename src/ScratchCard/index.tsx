@@ -1,8 +1,40 @@
 import React, { useState } from "react";
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button, Space, Divider } from "antd";
 import "antd/dist/antd.css";
 
+import verseBg from "./images/verseBg.png";
 import { ScratchOff } from "./ScratchOff";
+import Text from "antd/lib/typography/Text";
+
+const Verse = () => (
+  <div
+    style={{
+      width: "90%",
+      height: "90%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundImage: `url(${verseBg})`,
+      backgroundSize: "contain",
+    }}
+  >
+    <div>
+      <Divider />
+      <Space direction="vertical" align="center" style={{ fontSize: "large" }}>
+        <Text>Therefore,</Text>
+        <Text>preparing your minds for action,</Text>
+        <Text>and being sober-minded,</Text>
+        <Text>
+          set your <strong>hope</strong> fully on the grace
+        </Text>
+        <Text>that will be brought to you</Text>
+        <Text>at the revelation of Jesus Christ.</Text>
+      </Space>
+      <Divider>1 PETER 1:13</Divider>
+      <br />
+    </div>
+  </div>
+);
 
 function ScratchCard({ onNext }: { onNext: () => void }) {
   const [isRevealed, setIsRevealed] = useState(false);
@@ -11,7 +43,7 @@ function ScratchCard({ onNext }: { onNext: () => void }) {
     <>
       <Row justify="center" gutter={[32, 32]}>
         <ScratchOff reveal={() => setIsRevealed(true)} isRevealed={isRevealed}>
-          Lorem Ispum
+          <Verse />
         </ScratchOff>
       </Row>
       {isRevealed && (
