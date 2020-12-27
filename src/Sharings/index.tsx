@@ -2,7 +2,7 @@ import React, { ReactNode, useState } from "react";
 import { Form, Input, Button, Row, Col } from "antd";
 import Title from "antd/lib/typography/Title";
 import Paragraph from "antd/lib/typography/Paragraph";
-import downloadSharingImage from "./downloadSharing";
+import downloadPOMPdf from "./downloadSharing";
 
 interface SharingContent {
   s1: string;
@@ -105,7 +105,7 @@ const Sharing = () => {
           <Button
             block
             type="primary"
-            onClick={() => downloadSharingImage(".sharings")}
+            onClick={() => downloadPOMPdf(".sharings", "wowo.pdf")}
           >
             {"Download"}
           </Button>
