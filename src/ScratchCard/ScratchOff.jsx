@@ -6,6 +6,8 @@ import cover from "./images/cover.png";
 // https://github.com/andreruffert/scratchie
 // https://codepen.io/Totati/pen/pPXrJV
 
+const REVEAL_PERCENTAGE = 20;
+
 export class ScratchOff extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -101,7 +103,7 @@ export class ScratchOff extends React.PureComponent {
     this.isDrawing = false;
 
     // If mostly scratched, remove the canvas
-    if (this.filledInPixels > 30) {
+    if (this.filledInPixels > REVEAL_PERCENTAGE) {
       this.props.reveal();
     }
   }
