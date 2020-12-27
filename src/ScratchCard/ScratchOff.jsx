@@ -14,6 +14,7 @@ export class ScratchOff extends React.PureComponent {
     this.touchStart = this.touchStart.bind(this);
     this.touchMove = this.touchMove.bind(this);
     this.touchEnd = this.touchEnd.bind(this);
+    this.state = { showChildren: false };
   }
 
   componentDidMount() {
@@ -71,6 +72,8 @@ export class ScratchOff extends React.PureComponent {
     this.isDrawing = true;
     this.lastPoint = this.getPosition(event);
     this.ctx.globalCompositeOperation = "destination-out";
+
+    this.setState({ ...this.state, showChildren: true });
   }
 
   touchMove(event) {
@@ -145,7 +148,7 @@ export class ScratchOff extends React.PureComponent {
           />
         )}
         <div className="secret fill no-select flex justify-center items-center">
-          {this.props.children}
+          {this.state.showChildren && this.props.children}
         </div>
       </div>
     );
