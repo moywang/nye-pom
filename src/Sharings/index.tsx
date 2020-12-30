@@ -7,13 +7,11 @@ import downloadPOMPdf from "./downloadSharing";
 interface SharingContent {
   s1: string;
   s2: string;
-  s3: string;
 }
 
 const QUESTIONS = {
-  q1: "What's Romans 3:23?",
-  q2: "What's Romans 8:28?",
-  q3: "What's Romans 12:21?",
+  q1: "Inside of Card",
+  q2: "Prayer",
 };
 const SharingFrame = ({
   className = "sharings",
@@ -47,7 +45,6 @@ const Sharing = () => {
   const [sharings, setSharings] = useState<SharingContent>({
     s1: "",
     s2: "",
-    s3: "",
   });
   const onFinish = (sharings: SharingContent) => {
     setSharings(sharings);
@@ -72,9 +69,6 @@ const Sharing = () => {
       <Form.Item label={QUESTIONS.q2} name="s2">
         <Input.TextArea size="large" rows={6} />
       </Form.Item>
-      <Form.Item label={QUESTIONS.q3} name="s3">
-        <Input.TextArea size="large" rows={6} />
-      </Form.Item>
       <Form.Item name="finish">
         <Button type="primary" htmlType="submit">
           Finish
@@ -85,14 +79,12 @@ const Sharing = () => {
 
   const SharingResult = () => (
     <>
-      <Row justify="center" gutter={[32, 32]}>
+      <Row justify="center" style={{ fontSize: 22 }} gutter={[32, 32]}>
         <SharingFrame className="sharings">
           <Title level={4}>{QUESTIONS.q1}</Title>
           <Paragraph>{sharings.s1}</Paragraph>
           <Title level={4}>{QUESTIONS.q2}</Title>
           <Paragraph>{sharings.s2}</Paragraph>
-          <Title level={4}>{QUESTIONS.q3}</Title>
-          <Paragraph>{sharings.s3}</Paragraph>
         </SharingFrame>
       </Row>
       <Row justify="space-around" gutter={[32, 32]}>
