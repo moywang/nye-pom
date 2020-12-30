@@ -3,23 +3,28 @@ import { PDFDocument } from "pdf-lib";
 
 import template from "./POM_Template.pdf";
 
-const sharingImage = async (selector: string) => {
-  const el = document.querySelector(selector);
-  if (!el) {
+const sharingImages = async (selector: string) => {
+  const els = document.querySelectorAll(selector);
+  if (els.length === 0) {
     alert("no element found for image conversion!");
     throw new Error("No element found");
   }
 
-  const dataUrl = await domtoimage.toPng(el, { quality: 100 });
+  const imgsBuffers: ArrayBuffer[] = await Promise.all(
+    Array.from(els).map(async (el) => {
+      const dataUrl = await domtoimage.toPng(el, { quality: 100 });
+      return await fetch(dataUrl).then((res) => res.arrayBuffer());
+    })
+  );
 
-  const sharingImgBytes = await fetch(dataUrl).then((res) => res.arrayBuffer());
-  return sharingImgBytes;
+  return imgsBuffers;
 };
 
 const savePdf = (filename: string, bytes: Uint8Array) => {
   const blob = new Blob([bytes], { type: "application/pdf" });
   const link = document.createElement("a");
   link.href = window.URL.createObjectURL(blob);
+  link.download = "ilovepdf123.pdf";
   link.click();
 };
 
@@ -27,18 +32,22 @@ const downloadPOMPdf = async (selector: string, filename: string) => {
   const tmplPdfBytes = await fetch(template).then((res) => res.arrayBuffer());
   const pdfDoc = await PDFDocument.load(tmplPdfBytes);
 
-  const sharingImgBytes = await sharingImage(selector);
-  const sharingImg = await pdfDoc.embedPng(sharingImgBytes);
+  const sharingImgs = await sharingImages(selector);
+  await Promise.all(
+    sharingImgs.map(async (sharingImgBytes) => {
+      const sharingImg = await pdfDoc.embedPng(sharingImgBytes);
 
-  const croppedWidth = (sharingImg.width * 3) / 4;
-  const croppedHeight = (sharingImg.height * 3) / 4;
-  const sharingPage = pdfDoc.addPage([croppedWidth, croppedHeight]);
-  sharingPage.drawImage(sharingImg, {
-    x: 0,
-    y: 0,
-    width: croppedWidth,
-    height: croppedHeight,
-  });
+      const croppedWidth = (sharingImg.width * 3) / 4;
+      const croppedHeight = (sharingImg.height * 3) / 4;
+      const sharingPage = pdfDoc.addPage([croppedWidth, croppedHeight]);
+      sharingPage.drawImage(sharingImg, {
+        x: 0,
+        y: 0,
+        width: croppedWidth,
+        height: croppedHeight,
+      });
+    })
+  );
 
   const pdfBytes = await pdfDoc.save();
   savePdf(filename, pdfBytes);

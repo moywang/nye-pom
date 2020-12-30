@@ -83,6 +83,11 @@ const Sharing = () => {
         <SharingFrame className="sharings">
           <Title level={4}>{QUESTIONS.q1}</Title>
           <Paragraph>{sharings.s1}</Paragraph>
+        </SharingFrame>
+      </Row>
+      <br />
+      <Row justify="center" style={{ fontSize: 22 }} gutter={[32, 32]}>
+        <SharingFrame className="sharings">
           <Title level={4}>{QUESTIONS.q2}</Title>
           <Paragraph>{sharings.s2}</Paragraph>
         </SharingFrame>
