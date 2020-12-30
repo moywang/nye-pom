@@ -30,12 +30,14 @@ const downloadPOMPdf = async (selector: string, filename: string) => {
   const sharingImgBytes = await sharingImage(selector);
   const sharingImg = await pdfDoc.embedPng(sharingImgBytes);
 
-  const sharingPage = pdfDoc.addPage([sharingImg.width, sharingImg.height]);
+  const croppedWidth = (sharingImg.width * 3) / 4;
+  const croppedHeight = (sharingImg.height * 3) / 4;
+  const sharingPage = pdfDoc.addPage([croppedWidth, croppedHeight]);
   sharingPage.drawImage(sharingImg, {
     x: 0,
     y: 0,
-    width: sharingImg.width,
-    height: sharingImg.height,
+    width: croppedWidth,
+    height: croppedHeight,
   });
 
   const pdfBytes = await pdfDoc.save();
