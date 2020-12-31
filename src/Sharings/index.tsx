@@ -25,6 +25,7 @@ const SharingFrame = ({
     <div
       style={{
         width: "100%",
+        minHeight: "400px",
         border: "5px double #252A3B",
         padding: "20px",
         backgroundColor: "#EDFEF7",
