@@ -95,11 +95,11 @@ const Sharing = () => {
         <Form.Item label={QUESTIONS[step]} name="sharing">
           <Input.TextArea required size="large" rows={6} />
         </Form.Item>
-        <Form.Item name="next">
+        <Row justify="end">
           <Button type="primary" htmlType="submit">
             Next
           </Button>
-        </Form.Item>
+        </Row>
       </Form>
     </SharingFrame>
   );
