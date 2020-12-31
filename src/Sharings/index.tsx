@@ -4,15 +4,8 @@ import Title from "antd/lib/typography/Title";
 import Paragraph from "antd/lib/typography/Paragraph";
 import downloadPOMPdf from "./downloadSharing";
 
-interface SharingContent {
-  s1: string;
-  s2: string;
-}
+const QUESTIONS = ["Inside of Card", "Prayer"];
 
-const QUESTIONS = {
-  q1: "Inside of Card",
-  q2: "Prayer",
-};
 const SharingFrame = ({
   className = "sharings",
   children,
@@ -41,66 +34,40 @@ const SharingFrame = ({
 );
 
 const Sharing = () => {
-  const [finished, setFinished] = useState<boolean>(false);
-  const [sharings, setSharings] = useState<SharingContent>({
-    s1: "",
-    s2: "",
-  });
-  const onFinish = (sharings: SharingContent) => {
-    setSharings(sharings);
-    setFinished(true);
-  };
+  const [step, setStep] = useState<number>(0);
+  const [sharings, setSharings] = useState<string[]>([]);
 
-  const SharingForm = () => (
-    <Form
-      labelCol={{
-        span: 12,
-      }}
-      wrapperCol={{
-        span: 24,
-      }}
-      layout="vertical"
-      initialValues={sharings}
-      onFinish={onFinish}
-    >
-      <Form.Item label={QUESTIONS.q1} name="s1">
-        <Input.TextArea size="large" rows={6} />
-      </Form.Item>
-      <Form.Item label={QUESTIONS.q2} name="s2">
-        <Input.TextArea size="large" rows={6} />
-      </Form.Item>
-      <Form.Item name="finish">
-        <Button type="primary" htmlType="submit">
-          Finish
-        </Button>
-      </Form.Item>
-    </Form>
-  );
+  const onSharingFinish = ({ sharing: newSharing }: { sharing: string }) => {
+    const newSharings = [...sharings];
+    newSharings[step] = newSharing;
+    setSharings(newSharings);
+    setStep(step + 1);
+  };
+  const isFinished = () => step === QUESTIONS.length;
 
   const SharingResult = () => (
     <>
-      <Row justify="center" style={{ fontSize: 22 }} gutter={[32, 32]}>
-        <SharingFrame className="sharings">
-          <Title level={4}>{QUESTIONS.q1}</Title>
-          <Paragraph>{sharings.s1}</Paragraph>
-        </SharingFrame>
-      </Row>
-      <br />
-      <Row justify="center" style={{ fontSize: 22 }} gutter={[32, 32]}>
-        <SharingFrame className="sharings">
-          <Title level={4}>{QUESTIONS.q2}</Title>
-          <Paragraph>{sharings.s2}</Paragraph>
-        </SharingFrame>
-      </Row>
+      {QUESTIONS.map((q, index) => (
+        <>
+          <Row justify="center" style={{ fontSize: 22 }} gutter={[32, 32]}>
+            <SharingFrame className="sharings">
+              <Title level={2}>{QUESTIONS[index]}</Title>
+              <Paragraph>{sharings[index]}</Paragraph>
+            </SharingFrame>
+          </Row>
+          <br />
+        </>
+      ))}
       <Row justify="space-around" gutter={[32, 32]}>
         <Col xs={8} md={6} xl={4}>
-          <Button block onClick={() => setFinished(false)}>
+          <Button block size="large" onClick={() => setStep(0)}>
             {"Edit"}
           </Button>
         </Col>
         <Col xs={8} md={6} xl={4}>
           <Button
             block
+            size="large"
             type="primary"
             onClick={() => downloadPOMPdf(".sharings", "20_21_NYE.pdf")}
           >
@@ -111,10 +78,36 @@ const Sharing = () => {
     </>
   );
 
+  const SharingForm = () => (
+    <SharingFrame className="sharings">
+      <Form
+        labelCol={{
+          span: 12,
+        }}
+        wrapperCol={{
+          span: 24,
+        }}
+        layout="vertical"
+        size="large"
+        initialValues={{ sharing: sharings[step] }}
+        onFinish={onSharingFinish}
+      >
+        <Form.Item label={QUESTIONS[step]} name="sharing">
+          <Input.TextArea required size="large" rows={6} />
+        </Form.Item>
+        <Form.Item name="next">
+          <Button type="primary" htmlType="submit">
+            Next
+          </Button>
+        </Form.Item>
+      </Form>
+    </SharingFrame>
+  );
+
   return (
     <Row justify="center" gutter={[32, 32]}>
       <Col lg={12} md={16} xs={24}>
-        {finished ? <SharingResult /> : <SharingForm />}
+        {isFinished() ? <SharingResult /> : <SharingForm />}
       </Col>
     </Row>
   );
