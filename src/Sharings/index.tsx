@@ -16,6 +16,7 @@ const SharingFrame = ({
   <div
     className={className}
     style={{
+      width: "100%",
       border: "solid 15px #252A3B",
       padding: "15px",
       backgroundColor: "#EDFEF7",
@@ -23,6 +24,7 @@ const SharingFrame = ({
   >
     <div
       style={{
+        width: "100%",
         border: "5px double #252A3B",
         padding: "20px",
         backgroundColor: "#EDFEF7",
